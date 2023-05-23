@@ -49,6 +49,12 @@ async function run() {
             const result = await serviceCollection.findOne(query);
             res.send(result);
         })
+        app.get('/toy/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await AddCollection.findOne(query);
+            res.send(result);
+        })
 
         app.get('/addedToy', async (req, res) => {
             const result = await AddCollection.find().toArray();
@@ -64,6 +70,25 @@ async function run() {
             }
             const result = await AddCollection.find(query).toArray();
             res.send(result);
+        })
+
+
+        // app.patch('/toy/:id', async (req, res) => {
+        //     const updatedToy = req.body;
+        //     console.log(updatedToy)
+        // })
+        app.put('/toy/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) }
+            const options = { upsert: true };
+            const UpdatedToy = req.body;
+            const Toy = {
+                $set: {
+                    email: UpdatedToy.email, name: UpdatedToy.name, SellerName: UpdatedToy.SellerName, SubCategory: UpdatedToy.SubCategory, price: UpdatedToy.price, ratings: UpdatedToy.ratings, AvailableQuantity: UpdatedToy.AvailableQuantity, Description: UpdatedToy.Description, pictureUrl: UpdatedToy.pictureUrl
+                }
+            }
+            const result = await AddCollection.updateOne(filter, Toy, options);
+            res.send(result)
         })
 
 
