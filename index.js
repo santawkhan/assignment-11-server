@@ -55,9 +55,15 @@ async function run() {
             const result = await AddCollection.findOne(query);
             res.send(result);
         })
+        app.get('/addedToy/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await AddCollection.findOne(query);
+            res.send(result);
+        })
 
         app.get('/addedToy', async (req, res) => {
-            const result = await AddCollection.find().toArray();
+            const result = await AddCollection.find().limit(20).toArray();
             res.send(result);
         })
 
