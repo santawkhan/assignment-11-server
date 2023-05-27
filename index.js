@@ -62,7 +62,10 @@ async function run() {
             res.send(result);
         })
 
-
+        app.get('/addedToy', async (req, res) => {
+            const result = await AddCollection.find().limit(20).toArray();
+            res.send(result);
+        })
 
         app.get('/toy', async (req, res) => {
             console.log(req.query.email);
