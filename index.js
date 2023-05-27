@@ -33,7 +33,8 @@ async function run() {
         // Connect the client to the server	(optional starting in v4.7)
         client.connect();
 
-
+        const serviceCollection = client.db('categorydata').collection('toysData');
+        const AddCollection = client.db('categorydata').collection('addedToy');
         app.get('/category', async (req, res) => {
             const cursor = serviceCollection.find();
             const result = await cursor.toArray();
